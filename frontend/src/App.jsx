@@ -1,11 +1,8 @@
-import './App.css'
+import React from 'react';
+import Template from './components/auth/template';
 
 function App() {
-  return (
-    <div className='bg-cyan-700 text-center align-middle h-screen flex justify-center items-center text-green-500 text-9xl'>
-      CuraLink
-    </div>
-  )
+  return <Template />;
 }
 
-export default App
+export default App;
