@@ -1,14 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { GoogleLogin } from '@react-oauth/google';
 import { motion } from 'framer-motion';
 
 function SignupForm() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+
   const handleSignupSuccess = (credentialResponse) => {
     console.log('Google Signup Success:', credentialResponse);
+    // You can handle the token or redirect the user here.
   };
 
   const handleSignupError = () => {
     console.log('Google Signup Failed');
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMsg('');
+
+    // Basic client-side validation for password match
+    if (password !== confirmPassword) {
+      setErrorMsg('Passwords do not match');
+      return;
+    }
+
+    try {
+      // Adjust the URL to match your backend endpoint
+      const response = await axios.post('http://localhost:4000/api/v1/auth/signup', {
+        firstName,
+        lastName,
+        email,
+        phone,
+        password,
+      });
+
+      console.log('Signup successful:', response.data);
+      localStorage.setItem('token', response.data.token);
+      // Optionally redirect or update the UI after successful signup.
+    } catch (error) {
+      console.error('Signup error:', error.response ? error.response.data : error.message);
+      setErrorMsg(
+        error.response && error.response.data.error
+          ? error.response.data.error
+          : 'Signup failed. Please try again.'
+      );
+    }
   };
 
   return (
@@ -53,7 +96,7 @@ function SignupForm() {
           <p className="text-gray-500 text-center mt-2 mb-6">Join the medical portal today</p>
 
           {/* Form */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             {/* First & Last Name (Side by Side) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <motion.div 
@@ -68,6 +111,9 @@ function SignupForm() {
                   type="text"
                   placeholder="Enter first name"
                   className="w-full border border-blue-500 p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
                 />
               </motion.div>
 
@@ -83,6 +129,9 @@ function SignupForm() {
                   type="text"
                   placeholder="Enter last name"
                   className="w-full border border-blue-500 p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
                 />
               </motion.div>
             </div>
@@ -100,6 +149,9 @@ function SignupForm() {
                 type="email"
                 placeholder="Enter email"
                 className="w-full border border-blue-500 p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </motion.div>
 
@@ -116,6 +168,8 @@ function SignupForm() {
                 type="tel"
                 placeholder="Enter contact number"
                 className="w-full border border-blue-500 p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               />
             </motion.div>
 
@@ -133,6 +187,9 @@ function SignupForm() {
                   type="password"
                   placeholder="Enter password"
                   className="w-full border border-blue-500 p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </motion.div>
 
@@ -148,9 +205,15 @@ function SignupForm() {
                   type="password"
                   placeholder="Confirm password"
                   className="w-full border border-blue-500 p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
                 />
               </motion.div>
             </div>
+
+            {/* Error Message */}
+            {errorMsg && <div className="text-red-500 text-sm">{errorMsg}</div>}
 
             {/* Create Account Button */}
             <motion.button
