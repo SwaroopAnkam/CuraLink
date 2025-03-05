@@ -1,6 +1,14 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export default function Home() {
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  const handleSubscribeClick = () => {
+    navigate('/signup'); // Navigate to the signup page
+  };
+
   return (
     <div className="w-full flex flex-col items-center select-none mt-20">
       {/* Middle Section */}
@@ -29,7 +37,10 @@ export default function Home() {
       </div>
 
       {/* Subscribe Section */}
-      <div className="border-2 border-blue-400 bg-white text-blue-400 rounded-[10px] p-[0.5vw] pl-[1vw] flex gap-[2vw] mt-[1vw] transition-all duration-300 ease-in-out cursor-pointer group hover:bg-blue-400 hover:text-white">
+      <div
+        onClick={handleSubscribeClick} // Trigger the navigate function on button click
+        className="border-2 border-blue-400 bg-white text-blue-400 rounded-[10px] p-[0.5vw] pl-[1vw] flex gap-[2vw] mt-[1vw] transition-all duration-300 ease-in-out cursor-pointer group hover:bg-blue-400 hover:text-white"
+      >
         <span>Want to Try Now</span>
         <div className="transition-transform duration-200 ease-in-out group-hover:-rotate-45">
           <ArrowForwardIcon />

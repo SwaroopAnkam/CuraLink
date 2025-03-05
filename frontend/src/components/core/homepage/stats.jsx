@@ -37,14 +37,14 @@ export default function Stats() {
     // Define positions for eight cards arranged as a plus:
     // Container is 40vw x 40vw. The coordinates are percentages.
     const positions = [
-      { top: "-2%", left: "50%" }, // Top center
-      { top: "25%", left: "50%" }, // Below top center
-      { top: "50%", left: "115%" }, // Right center
-      { top: "50%", left: "70%" }, // Left of right center
+      { top: "-2%", left: "50%" }, 
+      { top: "25%", left: "50%" },
+      { top: "50%", left: "115%" }, 
+      { top: "50%", left: "74%" }, 
       { top: "105%", left: "50%" }, // Bottom center
       { top: "77%", left: "50%" }, // Above bottom center
-      { top: "50%", left: "-20%" }, // Left center
-      { top: "50%", left: "25%" }, // Right of left center
+      { top: "50%", left: "-18%" }, // Left center
+      { top: "50%", left: "27%" }, // Right of left center
     ];
   
     return (

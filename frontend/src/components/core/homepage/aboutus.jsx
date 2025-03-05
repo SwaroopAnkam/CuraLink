@@ -15,7 +15,7 @@ export default function AboutUs() {
           </div>
           {/* Right Column */}
           <div className="w-[30vw] max-[800px]:w-auto">
-            <img src="genot.png" alt="aboutUs" />
+            <img src="genot.png" alt="aboutUs" className="rounded-3xl" />
           </div>
         </div>
       </div>
